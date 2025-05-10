@@ -1,0 +1,25 @@
+name: publish-nuget-org
+run-name: publish-nuget-org
+
+on:
+  workflow_dispatch:  
+
+jobs:
+  build_package:
+    name: publish-nuget-org
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Install Dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+        
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: dotnet build src/ZippyNeuron.Pipelinez.sln --configuration Release
+
+      - name: Publish Nuget Package
+        run: dotnet nuget push "src/ZippyNeuron.Pipelinez/bin/Release/*.nupkg" --api-key ${{ secrets.PACKAGE_WRITE_NUGET }} --source https://api.nuget.org/v3/index.json --skip-duplicate

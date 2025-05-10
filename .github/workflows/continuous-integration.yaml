@@ -1,0 +1,43 @@
+name: continuous-integration
+run-name: continuous-integration
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  continuous-integration:
+    name: continuous-integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+    - name: Install Dotnet
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+          
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Restore
+      run: dotnet restore src/ZippyNeuron.Pipelinez.sln
+
+    - name: Build
+      run: dotnet build src/ZippyNeuron.Pipelinez.sln --configuration Release --no-restore
+
+    - name: Test
+      run: dotnet test src/ZippyNeuron.Pipelinez.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+
+    - name: Code Coverage Report
+      uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        filename: coverage/**/coverage.cobertura.xml
+        badge: false
+        fail_below_min: true
+        format: markdown
+        hide_branch_rate: false
+        hide_complexity: false
+        indicators: true
+        output: both
+        thresholds: '62 92'

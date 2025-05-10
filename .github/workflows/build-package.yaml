@@ -1,0 +1,31 @@
+name: build-package
+run-name: build-package
+
+on:
+  workflow_dispatch:  
+
+jobs:
+  build-package:
+    name: build-package
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Install Dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+          
+      - name: Install NuGet
+        uses: nuget/setup-nuget@v2
+        
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Build
+        run: dotnet build src/ZippyNeuron.Pipelinez.sln --configuration Release
+
+      - name: Add NuGet Source
+        run: dotnet nuget add source --username ZippyNeuron --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/ZippyNeuron/index.json"
+
+      - name: Publish Nuget Package
+        run: dotnet nuget push "src/ZippyNeuron.Pipelinez/bin/Release/*.nupkg" --api-key ${{ secrets.PACKAGE_WRITE_TOKEN }} --source github --skip-duplicate

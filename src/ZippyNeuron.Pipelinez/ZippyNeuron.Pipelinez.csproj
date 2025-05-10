@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>ZippyNeuron.Pipelinez</Title>
+    <Authors>ZippyNeuron</Authors>
+    <Version>1.0.2</Version>
+    <Description>Pipelinez is a class library that can be used to create input and output processing lines.</Description>
+    <Copyright>© 2025 ZippyNeuron</Copyright>
+    <PackageProjectUrl>https://github.com/ZippyNeuron/Pipelinez</PackageProjectUrl>
+    <PackageIcon>NuGet.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/ZippyNeuron/Pipelinez</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>pipeline, input, output, chain or responsibility</PackageTags>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\NuGet.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
+  </ItemGroup>
+
+</Project>

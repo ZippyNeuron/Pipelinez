@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 		..\.github\workflows\build-package.yaml = ..\.github\workflows\build-package.yaml
 		..\.github\workflows\continuous-integration.yaml = ..\.github\workflows\continuous-integration.yaml
 		..\.github\workflows\publish-nuget.yaml = ..\.github\workflows\publish-nuget.yaml
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZippyNeuron.Pipelinez", "ZippyNeuron.Pipelinez\ZippyNeuron.Pipelinez.csproj", "{C976D031-F2F5-8ADF-69FC-A1E63AC33662}"

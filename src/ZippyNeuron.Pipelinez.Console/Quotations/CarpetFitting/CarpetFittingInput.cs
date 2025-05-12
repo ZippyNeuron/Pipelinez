@@ -1,4 +1,4 @@
-﻿namespace WorkbenchWebApi.Pipelines.Console.Quotations.CarpetFitting;
+﻿namespace ZippyNeuron.Pipelinez.Console.Quotations.CarpetFitting;
 
 public sealed class CarpetFittingInput
 {

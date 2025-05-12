@@ -1,7 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
-using WorkbenchWebApi.Pipelines.Console.Quotations.CarpetFitting;
 using ZippyNeuron.Pipelinez;
+using ZippyNeuron.Pipelinez.Console.Quotations.CarpetFitting;
+
+var jsonOptions =
+    new JsonSerializerOptions() { WriteIndented = true };
 
 var serviceProviderBuilder = new ServiceCollection()
     .AddPipelineServices();
@@ -33,10 +36,17 @@ var input = new CarpetFittingInputBuilder()
     .SetAdditionalCosts(1.24)
     .Build();
 
-var output = await pipeline
+var vat1 = await pipeline
     .Action<CarpetFittingPipeline>(input);
 
-var jsonOptions =
-    new JsonSerializerOptions() { WriteIndented = true };
+var noVat = await pipeline
+    .Action<CarpetFittingNoVatPipeline>(input);
 
-Console.WriteLine(JsonSerializer.Serialize(output, jsonOptions));
+var vat2 = await pipeline
+    .Action<CarpetFittingPipeline>(input);
+
+Console.WriteLine(JsonSerializer.Serialize(vat1, jsonOptions));
+
+Console.WriteLine(JsonSerializer.Serialize(noVat, jsonOptions));
+
+Console.WriteLine(JsonSerializer.Serialize(vat2, jsonOptions));

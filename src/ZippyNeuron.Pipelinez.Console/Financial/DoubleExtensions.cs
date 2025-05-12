@@ -1,4 +1,4 @@
-﻿namespace WorkbenchWebApi.Pipelines.Console.Financial;
+﻿namespace ZippyNeuron.Pipelinez.Console.Financial;
 
 public static class DoubleExtensions
 {

@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
-using ZippyNeuron.Pipelinez;
 using ZippyNeuron.Pipelinez.Console.VatApi;
 
-namespace WorkbenchWebApi.Pipelines.Console.Quotations.CarpetFitting.Reactions;
+namespace ZippyNeuron.Pipelinez.Console.Quotations.CarpetFitting.Reactions;
 
 public sealed class VatLookupReaction : IPipelineReaction<CarpetFittingInput, CarpetFittingOutput>
 {

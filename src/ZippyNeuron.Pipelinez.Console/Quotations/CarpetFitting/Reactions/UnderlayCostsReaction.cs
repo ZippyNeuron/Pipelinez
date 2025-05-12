@@ -1,7 +1,6 @@
-﻿using WorkbenchWebApi.Pipelines.Console.Financial;
-using ZippyNeuron.Pipelinez;
+﻿using ZippyNeuron.Pipelinez.Console.Financial;
 
-namespace WorkbenchWebApi.Pipelines.Console.Quotations.CarpetFitting.Reactions;
+namespace ZippyNeuron.Pipelinez.Console.Quotations.CarpetFitting.Reactions;
 
 public sealed class UnderlayCostsReaction : IPipelineReaction<CarpetFittingInput, CarpetFittingOutput>
 {

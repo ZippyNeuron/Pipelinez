@@ -1,6 +1,4 @@
-﻿using ZippyNeuron.Pipelinez;
-
-namespace WorkbenchWebApi.Pipelines.Console.Quotations.CarpetFitting.Reactions;
+﻿namespace ZippyNeuron.Pipelinez.Console.Quotations.CarpetFitting.Reactions;
 
 public sealed class AssignReferenceReaction : IPipelineReaction<CarpetFittingInput, CarpetFittingOutput>
 {

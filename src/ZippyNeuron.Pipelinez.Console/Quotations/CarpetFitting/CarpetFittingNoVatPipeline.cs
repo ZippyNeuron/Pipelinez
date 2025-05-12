@@ -2,12 +2,11 @@
 
 namespace ZippyNeuron.Pipelinez.Console.Quotations.CarpetFitting;
 
-public sealed class CarpetFittingPipeline : PipelineCore<CarpetFittingInput, CarpetFittingOutput>
+public sealed class CarpetFittingNoVatPipeline : PipelineCore<CarpetFittingInput, CarpetFittingOutput>
 {
-    public CarpetFittingPipeline()
+    public CarpetFittingNoVatPipeline()
     {
         Preactions = new PipelineReactionsBuilder<CarpetFittingInput, CarpetFittingOutput>()
-            .Add<VatLookupReaction>()
             .Build();
 
         Reactions = new PipelineReactionsBuilder<CarpetFittingInput, CarpetFittingOutput>()
@@ -16,7 +15,6 @@ public sealed class CarpetFittingPipeline : PipelineCore<CarpetFittingInput, Car
                 .Add<CarpetCostsReaction>(r => r
                     .Add<UnderlayCostsReaction>()))
             .Add<OtherCostsReaction>()
-            .Add<VatCostsReaction>()
             .Add<RoundTotalReaction>()
             .Build();
     }

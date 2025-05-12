@@ -8,14 +8,14 @@ internal class PipelineReactionInvoker<TInput, TOutput>
         typeof(IPipelineReaction<TInput, TOutput>).GetMethod("React")!;
 
     public Task<bool>? Invoke(
-        Type reactionType,
+        IPipelineReaction<TInput, TOutput> reaction,
         TInput input, 
         TOutput output, 
         IServiceProvider serviceProvider, 
         IPipelineStateBag pipelineStateBag)
     {
         return (Task<bool>?)Method.Invoke(
-            Activator.CreateInstance(reactionType),
+            reaction,
             [input, output, serviceProvider, pipelineStateBag]);
     }
 }

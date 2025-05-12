@@ -5,8 +5,8 @@ namespace ZippyNeuron.Pipelinez;
 public abstract class PipelineCore<TInput, TOutput> 
     : IPipelineCore<TInput, TOutput> where TOutput : new()
 {
-    public IEnumerable<PipelineReactionDefinition> Preactions { get; init; }
-    public IEnumerable<PipelineReactionDefinition> Reactions { get; init; }
+    public IEnumerable<PipelineReactionDefinition<TInput, TOutput>> Preactions { get; init; }
+    public IEnumerable<PipelineReactionDefinition<TInput, TOutput>> Reactions { get; init; }
 
     public PipelineCore()
     {

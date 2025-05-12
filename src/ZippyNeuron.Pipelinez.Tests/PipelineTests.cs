@@ -32,6 +32,19 @@ public class PipelineTests
     }
 
     [Test]
+    public async Task Pipeline_CalledTwice_ReturnsCorrectOutput()
+    {
+        var input = new PipelineTestInput();
+        var sut = _pipelineFactory.Create<PipelineTestInput, PipelineTestOutput>();
+
+        var _ = await sut.Action<PipelineTest>(input);
+        var result = await sut.Action<PipelineTest>(input);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Id, Is.EqualTo(input.Id));
+    }
+
+    [Test]
     public void Pipeline_WithErrorInReaction_ThrowsException()
     {
         var input = new PipelineTestInput();

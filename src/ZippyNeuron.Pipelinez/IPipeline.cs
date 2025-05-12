@@ -2,6 +2,6 @@
 
 public interface IPipeline<TInput, TOutput>
 {
-    Task<TOutput> Action<TPipelineType>(TInput input)
-        where TPipelineType : IPipelineCore<TInput, TOutput>, new();
+    Task<TOutput> Action<TPipelineCore>(TInput input)
+        where TPipelineCore : IPipelineCore<TInput, TOutput>, new();
 }

@@ -2,10 +2,10 @@
 
 public static class PipelineReactionDefinitionsExtensions
 {
-    public static IEnumerable<PipelineReactionDefinition> ToReactionList(
-        this IEnumerable<PipelineReactionDefinition> reactionDefinitions)
+    public static IEnumerable<PipelineReactionDefinition<TInput, TOutput>> ToReactionList<TInput, TOutput>(
+        this IEnumerable<PipelineReactionDefinition<TInput, TOutput>> reactionDefinitions)
     {
-        var list = new List<PipelineReactionDefinition>();
+        var list = new List<PipelineReactionDefinition<TInput, TOutput>>();
 
         foreach (var reactionDefinition in reactionDefinitions)
         {

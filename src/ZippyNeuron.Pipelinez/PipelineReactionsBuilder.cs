@@ -3,8 +3,8 @@
 public sealed class PipelineReactionsBuilder<TInput, TOutput> 
     : IPipelineReactionsBuilder<TInput, TOutput>
 {
-    private List<PipelineReactionsBuilder<TInput, TOutput>> Reactions { get; init; } = [];
-    private Type Type { get; init; } = typeof(object);
+    private List<PipelineReactionsBuilder<TInput, TOutput>> ReactionTypes { get; init; } = [];
+    private Type? ReactionType { get; init; }
 
     public IPipelineReactionsBuilder<TInput, TOutput> Add<TPipelineReaction>(
         Action<IPipelineReactionsBuilder<TInput, TOutput>>? builder = null)
@@ -13,37 +13,42 @@ public sealed class PipelineReactionsBuilder<TInput, TOutput>
         var pipelineReactionsBuilder =
             new PipelineReactionsBuilder<TInput, TOutput>()
             {
-                Type = typeof(TPipelineReaction)
+                ReactionType = typeof(TPipelineReaction)
             };
 
-        Reactions.Add(pipelineReactionsBuilder);
+        ReactionTypes.Add(pipelineReactionsBuilder);
 
         builder?.Invoke(pipelineReactionsBuilder);
 
         return this;
     }
 
-    public IEnumerable<PipelineReactionDefinition> Build()
+    public IEnumerable<PipelineReactionDefinition<TInput, TOutput>> Build()
     {
-        List<PipelineReactionDefinition> reactionEntities = [];
+        List<PipelineReactionDefinition<TInput, TOutput>> reactionEntities = [];
 
-        RecurseToDefinitions(Reactions, reactionEntities);
+        RecurseToDefinitions(ReactionTypes, reactionEntities);
 
         return reactionEntities;
     }
 
     private static void RecurseToDefinitions(
         IEnumerable<PipelineReactionsBuilder<TInput, TOutput>> builderEntities, 
-        List<PipelineReactionDefinition> reactionEntities)
+        List<PipelineReactionDefinition<TInput, TOutput>> reactionEntities)
     {
         foreach(var builderEntity in builderEntities)
         {
+            if (builderEntity.ReactionType is null)
+            {
+                continue;
+            }
+
             var reactionEntity =
-                new PipelineReactionDefinition(builderEntity.Type);
+                new PipelineReactionDefinition<TInput, TOutput>(builderEntity.ReactionType);
 
             reactionEntities.Add(reactionEntity);
 
-            RecurseToDefinitions(builderEntity.Reactions, reactionEntity.Reactions);
+            RecurseToDefinitions(builderEntity.ReactionTypes, reactionEntity.Reactions);
         }
     }
 }

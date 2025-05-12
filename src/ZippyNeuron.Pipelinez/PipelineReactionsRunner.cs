@@ -10,13 +10,13 @@ internal sealed class PipelineReactionsRunner<TInput, TOutput>(
 {
     private readonly PipelineReactionInvoker<TInput, TOutput> Invoker = new();
 
-    public async Task RunSerial(IEnumerable<PipelineReactionDefinition> reactionDefinitions)
+    public async Task RunSerial(IEnumerable<PipelineReactionDefinition<TInput, TOutput>> reactionDefinitions)
     {
         foreach (var reactionDefinition in reactionDefinitions)
         {
             var task = Invoker
                 .Invoke(
-                    reactionDefinition.Type,
+                    reactionDefinition.Reaction,
                     _input, 
                     _output, 
                     _serviceProvider, 
@@ -29,7 +29,7 @@ internal sealed class PipelineReactionsRunner<TInput, TOutput>(
         }
     }
 
-    public async Task RunParallel(IEnumerable<PipelineReactionDefinition> reactionDefinitions)
+    public async Task RunParallel(IEnumerable<PipelineReactionDefinition<TInput, TOutput>> reactionDefinitions)
     {
         List<Task<bool>> tasks = [];
 
@@ -40,7 +40,7 @@ internal sealed class PipelineReactionsRunner<TInput, TOutput>(
         {
             var task = Invoker
                 .Invoke(
-                    reactionDefinition.Type, 
+                    reactionDefinition.Reaction, 
                     _input, 
                     _output, 
                     _serviceProvider, 

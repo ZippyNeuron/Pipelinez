@@ -6,5 +6,5 @@ public interface IPipelineReactionsBuilder<TInput, TOutput>
         Action<IPipelineReactionsBuilder<TInput, TOutput>>? builder = null)
             where TPipelineReaction : IPipelineReaction<TInput, TOutput>;
 
-    IEnumerable<PipelineReactionDefinition> Build();
+    IEnumerable<PipelineReactionDefinition<TInput, TOutput>> Build();
 }

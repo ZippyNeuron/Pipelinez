@@ -1,7 +1,8 @@
 ﻿namespace ZippyNeuron.Pipelinez;
 
-public sealed class PipelineReactionDefinition(Type definitionType)
+public sealed class PipelineReactionDefinition<TInput, TOutput>(Type type)
 {
-    public readonly List<PipelineReactionDefinition> Reactions = [];
-    public Type Type { get; init; } = definitionType;
+    public readonly List<PipelineReactionDefinition<TInput, TOutput>> Reactions = [];
+    public IPipelineReaction<TInput, TOutput> Reaction { get; } 
+        = (IPipelineReaction<TInput, TOutput>)Activator.CreateInstance(type)!;
 }

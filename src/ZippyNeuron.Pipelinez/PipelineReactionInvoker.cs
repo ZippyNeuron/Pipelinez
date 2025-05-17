@@ -12,9 +12,9 @@ internal sealed class PipelineReactionInvoker : IPipelineReactionInvoker
         IPipelineStateBag pipelineStateBag)
     {
         MethodInfo? method = typeof(IPipelineReaction<TInput, TOutput>)
-            .GetMethod("React");
+            .GetMethod("React")!;
 
-        return (Task<bool>?)method?
+        return (Task<bool>?)method
             .Invoke(reaction, [input, output, serviceProvider, pipelineStateBag]);
     }
 }

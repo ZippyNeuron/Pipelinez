@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ZippyNeuron.Pipelinez\ZippyNeuron.Pipelinez.csproj" />
   </ItemGroup>
 

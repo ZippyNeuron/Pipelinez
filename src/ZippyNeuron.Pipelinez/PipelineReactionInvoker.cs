@@ -2,20 +2,19 @@
 
 namespace ZippyNeuron.Pipelinez;
 
-internal class PipelineReactionInvoker<TInput, TOutput>
+internal sealed class PipelineReactionInvoker : IPipelineReactionInvoker
 {
-    private readonly MethodInfo Method =
-        typeof(IPipelineReaction<TInput, TOutput>).GetMethod("React")!;
-
-    public Task<bool>? Invoke(
+    public Task<bool>? Invoke<TInput, TOutput>(
         IPipelineReaction<TInput, TOutput> reaction,
-        TInput input, 
-        TOutput output, 
-        IServiceProvider serviceProvider, 
+        TInput input,
+        TOutput output,
+        IServiceProvider serviceProvider,
         IPipelineStateBag pipelineStateBag)
     {
-        return (Task<bool>?)Method.Invoke(
-            reaction,
-            [input, output, serviceProvider, pipelineStateBag]);
+        MethodInfo? method = typeof(IPipelineReaction<TInput, TOutput>)
+            .GetMethod("React");
+
+        return (Task<bool>?)method?
+            .Invoke(reaction, [input, output, serviceProvider, pipelineStateBag]);
     }
 }

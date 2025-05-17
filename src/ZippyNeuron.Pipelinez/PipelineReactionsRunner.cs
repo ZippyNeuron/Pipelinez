@@ -2,48 +2,29 @@
 
 namespace ZippyNeuron.Pipelinez;
 
-internal sealed class PipelineReactionsRunner<TInput, TOutput>(
-    TInput _input,
-    TOutput _output,
+internal sealed class PipelineReactionsRunner(
     IServiceProvider _serviceProvider,
-    IPipelineStateBag _pipelineStateBag)
+    IPipelineReactionInvoker _pipelineReactionInvoker,
+    IPipelineStateBag _pipelineStateBag) : IPipelineReactionsRunner
 {
-    private readonly PipelineReactionInvoker<TInput, TOutput> Invoker = new();
-
-    public async Task RunSerial(IEnumerable<PipelineReactionDefinition<TInput, TOutput>> reactionDefinitions)
-    {
-        foreach (var reactionDefinition in reactionDefinitions)
-        {
-            var task = Invoker
-                .Invoke(
-                    reactionDefinition.Reaction,
-                    _input, 
-                    _output, 
-                    _serviceProvider, 
-                    _pipelineStateBag);
-
-            if (task != null && await task && reactionDefinition.Reactions.Count > 0)
-            {
-                await RunSerial(reactionDefinition.Reactions);
-            }
-        }
-    }
-
-    public async Task RunParallel(IEnumerable<PipelineReactionDefinition<TInput, TOutput>> reactionDefinitions)
+    public async Task RunParallel<TInput, TOutput>(
+        TInput input,
+        TOutput output,
+        IEnumerable<PipelineReactionDefinition<TInput, TOutput>> reactionDefinitions)
     {
         List<Task<bool>> tasks = [];
 
-        var reactionsList = 
+        var reactionsList =
             reactionDefinitions.ToReactionList();
 
         foreach (var reactionDefinition in reactionsList)
         {
-            var task = Invoker
+            var task = _pipelineReactionInvoker
                 .Invoke(
-                    reactionDefinition.Reaction, 
-                    _input, 
-                    _output, 
-                    _serviceProvider, 
+                    reactionDefinition.Reaction,
+                    input,
+                    output,
+                    _serviceProvider,
                     _pipelineStateBag);
 
             if (task == null)
@@ -53,5 +34,30 @@ internal sealed class PipelineReactionsRunner<TInput, TOutput>(
         }
 
         await Task.WhenAll(tasks);
+    }
+
+    public async Task RunSerial<TInput, TOutput>(
+        TInput input,
+        TOutput output,
+        IEnumerable<PipelineReactionDefinition<TInput, TOutput>> reactionDefinitions)
+    {
+        foreach (var reactionDefinition in reactionDefinitions)
+        {
+            var task = _pipelineReactionInvoker
+                .Invoke(
+                    reactionDefinition.Reaction,
+                    input,
+                    output,
+                    _serviceProvider,
+                    _pipelineStateBag);
+
+            if (task == null)
+                continue;
+
+            if (await task && reactionDefinition.HasReactions)
+            {
+                await RunSerial(input, output, reactionDefinition.Reactions);
+            }
+        }
     }
 }

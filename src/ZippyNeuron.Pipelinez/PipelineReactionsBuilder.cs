@@ -38,17 +38,15 @@ public sealed class PipelineReactionsBuilder<TInput, TOutput>
     {
         foreach(var builderEntity in builderEntities)
         {
-            if (builderEntity.ReactionType is null)
+            if (builderEntity.ReactionType is not null)
             {
-                continue;
+                var reactionEntity =
+                    new PipelineReactionDefinition<TInput, TOutput>(builderEntity.ReactionType);
+
+                reactionEntities.Add(reactionEntity);
+
+                RecurseToDefinitions(builderEntity.ReactionTypes, reactionEntity.Reactions);
             }
-
-            var reactionEntity =
-                new PipelineReactionDefinition<TInput, TOutput>(builderEntity.ReactionType);
-
-            reactionEntities.Add(reactionEntity);
-
-            RecurseToDefinitions(builderEntity.ReactionTypes, reactionEntity.Reactions);
         }
     }
 }

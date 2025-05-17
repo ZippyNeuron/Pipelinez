@@ -6,6 +6,8 @@ public static class PipelineServices
 {
     public static IServiceCollection AddPipelineServices(this IServiceCollection services) => 
         services
-            .AddTransient<IPipelineFactory, PipelineFactory>()
+            .AddSingleton<IPipelineFactory, PipelineFactory>()
+            .AddTransient<IPipelineReactionsRunner, PipelineReactionsRunner>()
+            .AddTransient<IPipelineReactionInvoker, PipelineReactionInvoker>()
             .AddTransient<IPipelineStateBag, PipelineStateBag>();
 }

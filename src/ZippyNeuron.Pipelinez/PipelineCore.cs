@@ -18,18 +18,14 @@ public abstract class PipelineCore<TInput, TOutput>
     {
         var output = new TOutput();
         
-        using var stateBag = serviceProvider
-            .GetRequiredService<IPipelineStateBag>();
+        var pipelineReactionsRunner = serviceProvider
+            .GetRequiredService<IPipelineReactionsRunner>();
 
-        var runner = new PipelineReactionsRunner<TInput, TOutput>(
-            input,
-            output,
-            serviceProvider,
-            stateBag);
-
-        await runner.RunParallel(Preactions);
-
-        await runner.RunSerial(Reactions);
+        await pipelineReactionsRunner
+            .RunParallel(input, output, Preactions);
+        
+        await pipelineReactionsRunner
+            .RunSerial(input, output, Reactions);
     
         return output;
     }

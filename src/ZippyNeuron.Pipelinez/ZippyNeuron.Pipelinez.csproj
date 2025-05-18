@@ -7,7 +7,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>ZippyNeuron.Pipelinez</Title>
     <Authors>ZippyNeuron</Authors>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Description>Pipelinez is a class library that can be used to create input and output processing lines.</Description>
     <Copyright>© 2025 ZippyNeuron</Copyright>
     <PackageProjectUrl>https://github.com/ZippyNeuron/Pipelinez</PackageProjectUrl>

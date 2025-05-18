@@ -7,7 +7,7 @@ var jsonOptions =
     new JsonSerializerOptions() { WriteIndented = true };
 
 var serviceProviderBuilder = new ServiceCollection()
-    .AddPipelineServices();
+    .AddPipelinezServices();
 
 serviceProviderBuilder
     .AddHttpClient("VatLookupApiClient", (httpClient) =>

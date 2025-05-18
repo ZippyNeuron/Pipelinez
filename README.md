@@ -67,7 +67,7 @@ public sealed class SimpleReaction : IPipelineReaction<TheInput, TheOutput>
 }
 ```
 
-### - Create a pipeline with your input and output types
+### Create a pipeline with your input and output types
 Create a pipeline based on the input and output types.
 ```
 var pipeline = pipelineFactory.CreatePipeline<TheInput, TheOutput>();

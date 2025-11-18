@@ -15,7 +15,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/ZippyNeuron/Pipelinez</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageTags>pipeline, input, output, chain or responsibility</PackageTags>
+    <PackageTags>pipeline, input, output, chain of responsibility</PackageTags>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>

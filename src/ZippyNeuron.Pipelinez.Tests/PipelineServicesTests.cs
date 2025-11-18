@@ -16,9 +16,11 @@ public class PipelineServicesTests
     [Test]
     public void AddPipelineServices_ShouldRegisterServices()
     {
+        #pragma warning disable CS0618
         var serviceProvider = _serviceCollection
             .AddPipelineServices()
             .BuildServiceProvider();
+        #pragma warning restore CS0618
 
         AssertPipelinezServicesAreRegistered(serviceProvider);
     }
@@ -40,9 +42,12 @@ public class PipelineServicesTests
         var pipelineReactionInvoker = serviceProvider.GetService<IPipelineReactionInvoker>();
         var pipelineStateBag = serviceProvider.GetService<IPipelineStateBag>();
 
-        Assert.That(pipelineFactory, Is.Not.Null);
-        Assert.That(pipelineReactionsRunner, Is.Not.Null);
-        Assert.That(pipelineReactionInvoker, Is.Not.Null);
-        Assert.That(pipelineStateBag, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(pipelineFactory, Is.Not.Null);
+            Assert.That(pipelineReactionsRunner, Is.Not.Null);
+            Assert.That(pipelineReactionInvoker, Is.Not.Null);
+            Assert.That(pipelineStateBag, Is.Not.Null);
+        }
     }
 }

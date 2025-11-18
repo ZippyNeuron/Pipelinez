@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NSubstitute;
-using System;
 using System.Reflection;
 using ZippyNeuron.Pipelinez.Tests.Setup;
 
@@ -15,8 +14,10 @@ public class PipelineTests
     [SetUp]
     public void Setup()
     {
+        #pragma warning disable CS0618
         _serviceCollection = new ServiceCollection()
             .AddPipelineServices();
+        #pragma warning restore CS0618
     }
 
     [Test]
